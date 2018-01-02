@@ -2,12 +2,19 @@ class SearchLikesController < ApplicationController
   before_action :santize_search_terms
 
   def index
-    puts "*** the index method has been called ***"
-    @search_params = params.extract!(:blog_name, :text_term, :text_term_case_insensitive, :source_blog)
-    render :index
+    default_params = {blog_name: "ritterssport", search_text: "clothes", source_blog: "princeofsparkles"}
+    @search_params = default_params
+  end
+
+  def results
+    display_results
+  end
+
+  def display_results
+    @results = params.extract!(:blog_name, :search_text, :source_blog)
   end
 
   def santize_search_terms
-    params.permit([:blog_name, :text_search_term, :text_search_case_sensitive, :source_blog_search_term])
+    params.permit([:blog_name, :search_text, :source_blog])
   end
 end

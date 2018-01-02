@@ -1,27 +1,3 @@
-<h1>dumpstr</h2>
-<h3>search a tumblr's likes</h3>
+<%= render partial: "search_form" %>
 
-<%= form_with url: search_likes_path, class: "search_form", method: :get, remote: true do |form| %>
-  <%= form.label :blog_name, "Tumblr name to search." %>
-  <br></br>
-  <%= form.text_field :blog_name, value: "ritterssport" %>
-  <br></br> <br></br>
-
-  <%= form.label :text_term, "What to search for in post text and tags. Does not yet support boolean keywords." %>
-  <br></br>
-  <%= form.text_field :text_term, value: "the arcana" %>
-  <br></br>
-  <%= form.label :text_term_case_insensitive, "make search case sensitive" %>
-  <%= form.check_box :text_term_case_insensitive, value: false %>
-  <br></br> <br></br>
-
-  <%= form.label :source_blog, "(optional) Search only for posts by this tumblr." %>
-  <br></br>
-  <%= form.text_field :source_blog, value: "princeofsparkles" %>
-  <br></br> <br></br>
-
-  <%= form.submit "Search" %>
-<% end %>
-
-<br></br> <br></br>
-<%= render partial: "results", locals: {display_search_params: @search_params} %>
+<div id="search_results"></div>
