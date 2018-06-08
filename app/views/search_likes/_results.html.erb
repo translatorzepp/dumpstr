@@ -1,3 +1,6 @@
 <h3>results</h3>
 <p>Number of posts found: <%= result_count %></p>
-<p><%= result_posts %></p>
+
+<% result_posts.each do |post| %>
+  <div><a href=<%= post[:url] %>><%= post[:text] %></a></div>
+<% end %>
