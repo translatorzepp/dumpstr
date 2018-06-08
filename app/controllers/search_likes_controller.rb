@@ -9,11 +9,14 @@ class SearchLikesController < ApplicationController
   def results
     search_params = params.extract!(:blog_name, :search_text, :source_blog)
     tumbler = TumblrSearch.new(blog_to_search: search_params[:blog_name])
-    @results = tumbler.find_liked_posts_matching(post_text: search_params[:search_text], post_creator: search_params[:source_blog])
+    results = tumbler.find_liked_posts_matching(post_text: search_params[:search_text], post_creator: search_params[:source_blog])
+    # flash results[:error_message]
+    @results = results[:posts]
     display_results
   end
 
   def display_results
+    # any necessary parsing to pass it forward here?
   end
 
   def santize_search_terms

@@ -17,7 +17,11 @@ class TumblrSearch
     match_regex = Regexp.new(post_text, Regexp::IGNORECASE)
     # an array of post hashes
     results = liked_posts.each_with_object([]) do |post, matching_posts|
-      if post["summary"].match(match_regex) || post["tags"].any? { |tag| tag.match(match_regex) }
+      post_body = post["body"] || ""
+      if post["summary"].match(match_regex) || # doing this separately to short-circuit if possible and avoid parsing the whole html body
+         post["tags"].any? { |tag| tag.match(match_regex) } || # tags is an array
+         post_body.match(match_regex)
+
         matching_posts << post
       end
     end

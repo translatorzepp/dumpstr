@@ -9,7 +9,7 @@ RSpec.describe "TumblrSearch" do
     "msg" => "success",
   } }
   let(:fake_response_success_populated) { {
-    "liked_posts" => [post_overcome_1, post_no_overcome_1, post_overcome_2, post_overcome_3],
+    "liked_posts" => [post_no_overcome_1, post_overcome_1, post_no_overcome_2, post_overcome_2, post_overcome_3, post_overcome_4],
     "msg" => "success",
   } }
   let(:fake_response_failure) { {
@@ -18,10 +18,12 @@ RSpec.describe "TumblrSearch" do
     "status" => 401,
   } }
 
+  let(:post_no_overcome_1) { {"summary" => "At length from us may find", "tags" => ["paradise lost"]}  }
   let(:post_overcome_1)    { {"summary" => "who overcomes", "tags" => ["paradise lost"]}               }
-  let(:post_no_overcome_1) { {"summary" => "by force", "tags" => ["paradise lost"]}                    }
+  let(:post_no_overcome_2) { {"summary" => "by force", "tags" => ["paradise lost"]}                    }
   let(:post_overcome_2)    { {"summary" => "hath overcome", "tags" => ["paradise lost"]}               }
   let(:post_overcome_3)    { {"summary" => "but half his foe", "tags" => ["paradise lost","overcome"]} }
+  let(:post_overcome_4)    { {"summary" => "but half his foe", "tags" => ["paradise lost"], "body" => "a speech about overcoming"} }
 
   before :each do
     @gateway_double = instance_double("TumblrGateway")
@@ -31,9 +33,10 @@ RSpec.describe "TumblrSearch" do
   it "returns a hash with no error message and results when there are matching liked posts" do
     expect(@gateway_double).to receive(:all_liked_posts).with(blog).and_return(fake_response_success_populated)
 
-    result = @tumblrsearch.find_liked_posts_matching(post_text: "Overcome")
+    result = @tumblrsearch.find_liked_posts_matching(post_text: "Overcom")
     expect(result[:error_message]).to be(nil)
-    expect(result[:posts]).to include(post_overcome_3, post_overcome_2, post_overcome_1)
+    expect(result[:posts]).to include(post_overcome_3, post_overcome_2, post_overcome_1, post_overcome_4)
+    expect(result[:posts]).not_to include(post_no_overcome_1, post_no_overcome_2)
   end
 
   it "returns a hash with no error message and empty result set when there are no matching liked posts" do
