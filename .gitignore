@@ -20,3 +20,6 @@
 
 # Ignore encrypted secrets key file.
 /config/secrets.yml.key
+
+# Ignore images
+/*.png
