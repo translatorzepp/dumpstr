@@ -1,18 +1,25 @@
 <%= form_with url: search_likes_results_path, method: :get, class: "search_form", remote: true do |form| %>
-  <%= form.label :blog_name, "Tumblr name to search." %>
-  <br />
-  <%= form.text_field :blog_name, value: @search_params[:blog_name] %>
-  <br/> <br/>
 
-  <%= form.label :search_text, "What to search for in post text and tags. Does not yet support boolean keywords." %>
-  <br/>
-  <%= form.text_field :search_text, value: @search_params[:search_text] %>
-  <br/> <br/>
+  <div class="feature-implemented">
+    <%= form.label :blog_name, "Search this tumblr's likes. Just the blog name, without dot tumblr dot com." %>
+    <br />
+    <%= form.text_field :blog_name, value: @search_params[:blog_name], placeholder: "blog name" %>
+    <br/> <br/>
+  </div>
 
-  <%= form.label :source_blog, "(optional) Search only for posts by this tumblr." %>
-  <br/>
-  <%= form.text_field :source_blog, value: @search_params[:source_blog] %>
-  <br/> <br/>
+  <div class="feature-implemented">
+    <%= form.label :search_text, "What to search for in post text and tags. Does not yet support boolean keywords." %>
+    <br/>
+    <%= form.text_field :search_text, value: @search_params[:search_text] %>
+    <br/> <br/>
+  </div>
+
+  <div class="feature-not-implemented">
+    <%= form.label :source_blog, "(optional) Search only for posts by this tumblr." %>
+    <br/>
+    <%= form.text_field :source_blog, value: @search_params[:source_blog] %>
+    <br/> <br/>
+  </div>
 
   <%= form.submit "Search" %>
 <% end %>

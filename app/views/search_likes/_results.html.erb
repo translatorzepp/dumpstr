@@ -2,5 +2,5 @@
 <p>Number of posts found: <%= result_count %></p>
 
 <% result_posts.each do |post| %>
-  <div><a href=<%= post[:url] %>><%= post[:text] %></a></div>
+  <div><a href=<%= post[:url] %> target="_blank"><%= post[:text] %></a></div>
 <% end %>
