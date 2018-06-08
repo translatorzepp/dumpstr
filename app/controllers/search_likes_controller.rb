@@ -12,6 +12,7 @@ class SearchLikesController < ApplicationController
     results = tumbler.find_liked_posts_matching(post_text: search_params[:search_text], post_creator: search_params[:source_blog])
     # flash results[:error_message]
     @results = results[:posts]
+    @result_count = results[:posts].size
     display_results
   end
 
