@@ -23,7 +23,7 @@ RSpec.describe "TumblrGateway" do
 
     it "on failure, returns a hash with an empty collection of liked posts and an error message" do
       failure_result = gateway.all_liked_posts("unexisting")
-      expect(failure_result).to eq({"liked_posts" => [], "message" => "Not Found"})
+      expect(failure_result).to eq({"liked_posts" => [], "message" => "This blog doesn't exist."})
     end
 
     it "logs on failure" do
