@@ -3,7 +3,8 @@
 
 <% result_posts.each do |post| %>
   <div>
-    <%= post[:info_text] %>
+    liked from <strong><%= post[:liked_from_blog] %></strong>:
     <a href=<%= post[:url] %> target="_blank"><%= post[:link_text] %></a>
+    <small><%= post[:type] %></small>
   </div>
 <% end %>
