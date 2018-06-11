@@ -31,6 +31,6 @@ class TumblrSearch
   end
 
   def _failure(response)
-    {:error_message => response["msg"], :posts => []}
+    {:error_message => response["message"], :posts => []}
   end
 end
