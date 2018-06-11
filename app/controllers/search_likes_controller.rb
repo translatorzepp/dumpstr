@@ -20,7 +20,8 @@ class SearchLikesController < ApplicationController
   def display_results(posts)
     display_friendly_links = posts.each_with_object([]) do |post, display_friendly_links|
       display_friendly_links << {
-        :text => "liked from #{post['blog_name']}: #{post['summary']}",
+        :info_text => "liked from #{post['blog_name']}:",
+        :link_text => post["summary"],
         :url => post["post_url"]
       }
     end
