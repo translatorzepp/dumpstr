@@ -8,29 +8,33 @@ class TumblrSearch
     response = @gateway.all_liked_posts(@blog)
 
     return _failure(response) if response["status"]
-    return _success(response["liked_posts"], post_text)
+    return _success(response, post_text)
   end
 
   private
 
-  def _success(liked_posts, post_text)
+  def _success(response, post_text)
     match_regex = Regexp.new(post_text, Regexp::IGNORECASE)
-
     # an array of post hashes
-    results = liked_posts.each_with_object([]) do |post, matching_posts|
-      post_body = post["body"] || ""
-      if post["summary"].match(match_regex) || # doing this separately to short-circuit if possible and avoid parsing the whole html body
-         post["tags"].any? { |tag| tag.match(match_regex) } || # tags is an array
-         post_body.match(match_regex)
+    matching_posts = _posts_with_match(response["liked_posts"], match_regex)
 
-        matching_posts << post
-      end
-    end
-
-    {:error_message => nil, :posts => results}
+    {:error_message => nil, :posts => matching_posts}
   end
 
   def _failure(response)
     {:error_message => response["message"], :posts => []}
+  end
+
+  def _posts_with_match(posts, regex)
+    posts.each_with_object([]) do |post, matching_posts|
+      post_body = post["body"] || ""
+
+      if post["summary"].match(match_regex) ||
+          post["tags"].any? { |tag| tag.match(match_regex) } ||
+          post_body.match(match_regex)
+
+        matching_posts << post
+      end
+    end
   end
 end
