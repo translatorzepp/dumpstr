@@ -1,7 +1,7 @@
 <%= form_with url: search_likes_results_path, method: :get, class: "search_form", remote: true do |form| %>
 
   <div class="feature-implemented">
-    <%= form.label :blog_name, "Search this tumblr's likes. Just the blog name, without the dot tumblr dot com." %>
+    <%= form.label :blog_name, "Search this tumblr's likes. Just the blog name, without the dot tumblr dot com. Currently only searches the most recent 1000 likes." %>
     <br />
     <%= form.text_field :blog_name, value: @search_params[:blog_name], placeholder: "blog name" %>
     <br/> <br/>
@@ -25,4 +25,4 @@
 <% end %>
 
 <br/> <br/>
-<div id="loading" style="visibility:hidden"><i>Searching...</i></div>
+<div id="loading" style="display:none"><i>Searching...</i></div>
