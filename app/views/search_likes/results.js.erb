@@ -1,2 +1,3 @@
+document.getElementById("search_results").style.opacity="1";
 document.getElementById('search_results').innerHTML = "<%= escape_javascript(render partial: 'results', locals: {result_posts: @results, result_count: @result_count}) %>";
 document.getElementById("loading").style.display="none";
