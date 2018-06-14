@@ -7,7 +7,7 @@ class TumblrSearch
   def find_liked_posts_matching(post_text:, post_creator: nil)
     response = @gateway.all_liked_posts(@blog)
 
-    return _failure(response) if response["status"]
+    return _failure(response) if response["message"]
     return _success(response, post_text)
   end
 
@@ -29,9 +29,9 @@ class TumblrSearch
     posts.each_with_object([]) do |post, matching_posts|
       post_body = post["body"] || ""
 
-      if post["summary"].match(match_regex) ||
-          post["tags"].any? { |tag| tag.match(match_regex) } ||
-          post_body.match(match_regex)
+      if post["summary"].match(regex) ||
+          post["tags"].any? { |tag| tag.match(regex) } ||
+          post_body.match(regex)
 
         matching_posts << post
       end

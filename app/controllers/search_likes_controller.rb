@@ -12,7 +12,7 @@ class SearchLikesController < ApplicationController
     tumbler = TumblrSearch.new(blog_to_search: search_params[:blog_name])
     results = tumbler.find_liked_posts_matching(post_text: search_params[:search_text], post_creator: search_params[:source_blog])
 
-    flash results[:error_message] if results[:error_message]
+    @error = results[:error_message]
     @result_count = results[:posts].size
     display_results(results[:posts])
   end
