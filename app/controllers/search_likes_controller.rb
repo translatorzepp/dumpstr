@@ -1,11 +1,6 @@
 class SearchLikesController < ApplicationController
   before_action :santize_search_terms
 
-  def index
-    default_params = {blog_name: "ritterssport", search_text: "john mulaney"}
-    @search_params = default_params
-  end
-
   def results
     @results = []
     search_params = params.extract!(:blog_name, :search_text, :source_blog)

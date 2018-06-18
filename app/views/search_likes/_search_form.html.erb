@@ -3,21 +3,21 @@
   <div class="feature-implemented">
     <%= form.label :blog_name, "Search this tumblr's likes. Just the blog name, without the dot tumblr dot com. Currently only searches the most recent 1000 likes." %>
     <br />
-    <%= form.text_field :blog_name, value: @search_params[:blog_name], placeholder: "blog name", required: true %>
+    <%= form.text_field :blog_name, placeholder: "blog name", required: true %>
     <br/> <br/>
   </div>
 
   <div class="feature-implemented">
     <%= form.label :search_text, "What to search for in post text and tags. Case-insensitive; does not yet support boolean keywords." %>
     <br/>
-    <%= form.text_field :search_text, value: @search_params[:search_text], placeholder: "thing to search for", required: true %>
+    <%= form.text_field :search_text, placeholder: "thing to search for", required: true %>
     <br/> <br/>
   </div>
 
   <div class="feature-not-implemented">
     <%= form.label :source_blog, "(optional) Search only for posts by this tumblr." %>
     <br/>
-    <%= form.text_field :source_blog, value: @search_params[:source_blog] %>
+    <%= form.text_field :source_blog %>
     <br/> <br/>
   </div>
 
