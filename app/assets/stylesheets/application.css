@@ -17,3 +17,13 @@
 .feature-not-implemented {
   visibility: hidden;
 }
+
+body {
+  background: #36465d; /* tumblr blue */
+  font-family: sans-serif;
+  color: white;
+}
+
+a:link, a:visited {
+  color: white;
+}

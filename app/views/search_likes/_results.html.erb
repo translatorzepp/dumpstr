@@ -1,11 +1,12 @@
 <h3>results</h3>
 <div class="errors"><%= @error %></div>
-<p>Number of posts found: <%= result_count %></p>
+<p><i>Number of posts found: <%= result_count %></i></p>
 
 <% result_posts.each do |post| %>
   <div>
     liked from <strong><%= post[:liked_from_blog] %></strong>:
     <a href=<%= post[:url] %> target="_blank"><%= post[:link_text] %></a>
-    <small><%= post[:type] %></small>
+    <small><i><%= post[:type] %></i></small>
   </div>
+  <br />
 <% end %>
