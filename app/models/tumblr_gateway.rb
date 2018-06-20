@@ -25,11 +25,11 @@ class TumblrGateway
     #   otherwise, it'll return the 'meta' (incl status, msg) + body if it exists
     # currently only searches a max of 1000 likes
     begin
-      likes_count = likes_count(blog_to_search)
+      likes_count = _likes_count(blog_to_search)
 
       likes_count = likes_count > HIGHEST_OFFSET ? HIGHEST_OFFSET : likes_count
       while offset <= likes_count
-        response_from_tumblr = make_api_call(blog_to_search, {:limit => LIMIT, :offset => offset})
+        response_from_tumblr = _make_api_call(blog_to_search, {:limit => LIMIT, :offset => offset})
 
         results["liked_posts"] += response_from_tumblr["liked_posts"]
         Rails.logger.debug("Adding #{results['liked_posts'].size} liked posts. Offset: #{offset}")
@@ -37,20 +37,22 @@ class TumblrGateway
       end
 
     rescue TumblrError => e
-      results["message"] = errors(e.message)
+      results["message"] = _errors(e.message)
     end
 
     results
   end
 
-  def likes_count(blog_to_search)
-    response_from_tumblr = make_api_call(blog_to_search, {:limit => 1})
+  private
+
+  def _likes_count(blog_to_search)
+    response_from_tumblr = _make_api_call(blog_to_search, {:limit => 1})
     count = response_from_tumblr["liked_count"]
     Rails.logger.debug("Number of liked posts: #{count}")
     count
   end
 
-  def make_api_call(blog_to_search, options)
+  def _make_api_call(blog_to_search, options)
     response_from_tumblr = @client.blog_likes(blog_to_search, options)
     if response_from_tumblr["status"]
       Rails.logger.error("Tumblr client error. Status Code #{response_from_tumblr['status']}. Message: #{response_from_tumblr['msg']}")
@@ -59,7 +61,7 @@ class TumblrGateway
     response_from_tumblr
   end
 
-  def errors(status_code)
+  def _errors(status_code)
     {
       "404" => "This blog doesn't exist.",
       "403" => "This blog has their likes set to private.",
