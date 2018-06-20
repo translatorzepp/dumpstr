@@ -6,16 +6,15 @@ RSpec.describe "TumblrSearch" do
 
   let(:fake_response_success_empty) { {
     "liked_posts" => [],
-    "msg" => "success",
+    "message" => nil,
   } }
   let(:fake_response_success_populated) { {
     "liked_posts" => [post_no_overcome_1, post_overcome_1, post_no_overcome_2, post_overcome_2, post_overcome_3, post_overcome_4],
-    "msg" => "success",
+    "message" => nil,
   } }
-  let(:fake_response_failure) { {
+  let(:fake_response_failure_forbidden) { {
     "liked_posts" => [],
-    "msg" => "made up error about user not having searchable likes",
-    "status" => 401,
+    "message" => "This blog has their likes set to private.",
   } }
 
   let(:post_no_overcome_1) { {"summary" => "At length from us may find", "tags" => ["paradise lost"]}  }
@@ -54,9 +53,9 @@ RSpec.describe "TumblrSearch" do
   end
 
   it "returns a hash with failure message when the request fails" do
-    expect(@gateway_double).to receive(:all_liked_posts).with(blog).and_return(fake_response_failure)
+    expect(@gateway_double).to receive(:all_liked_posts).with(blog).and_return(fake_response_failure_forbidden)
 
     result = @tumblrsearch.find_liked_posts_matching(post_text: "overcome")
-    expect(result).to eq({:error_message => "made up error about user not having searchable likes", :posts => []})
+    expect(result).to eq({:error_message => "This blog has their likes set to private.", :posts => []})
   end
 end
